@@ -54,11 +54,16 @@ data-files:
     data/benchmarks/iplookup/2.iprs
     data/benchmarks/iplookup/3.iprs
 
+
 source-repository head
   type: git
   location: https://github.com/bravit/hid-examples
 
 flag with-pg
+  manual: True
+  default: False
+
+flag macos-iconv-link-troubles
   manual: True
   default: False
 
@@ -359,6 +364,9 @@ executable covid
       Paths_hid_examples
   hs-source-dirs:
       ch14/covid
+  if flag(macos-iconv-link-troubles)
+    include-dirs: /usr/include
+    extra-lib-dirs: /usr/lib
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       attoparsec >=0.13 && <0.15
@@ -381,6 +389,9 @@ executable csv-simple
       Paths_hid_examples
   autogen-modules:
       Paths_hid_examples
+  if flag(macos-iconv-link-troubles)
+    include-dirs: /usr/include
+    extra-lib-dirs: /usr/lib
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
   build-depends:
       attoparsec >=0.13 && <0.15
